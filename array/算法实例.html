@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*******递归函数*******/
+        //
+        //1~100相加
+        //
+        var sum = function(num){
+
+            if(num<1){
+                return num = 0;
+            }
+            return num + sum(num-1);
+        }
+        console.log(sum(100));
+
+        //
+        //递归遍历
+        //
+        var obj = {
+            a:{
+                x : 1,
+                y : 2,
+                z : 3
+            },
+            b:{
+                x : 4,
+                y : 5,
+                z : 6
+            }
+        };
+        var arr = function (obj){
+            for(var o in obj){
+                if(typeof obj[o] == 'object'){
+                    arr(obj[o]);
+                }else{
+                    console.log(obj[o]);
+                }
+            }
+        }
+        arr(obj);
+
+        //
+        //递归阶乘
+        //
+        function add(num){
+
+            if(num <= 1){
+                return 1;
+            }
+            return num * add(num-1);
+        }
+        console.log(add(5));
+        //改进：避免同名变量改变赋值后，出现错误。以及严格模式下不能使用arguments.callee
+        var add = function f(num){
+            if(num <= 1){
+                return 1;
+            }
+            return num * f(num-1);
+        }
+        console.log(add(5));
+
+        /*******数组去重*******/
+        //indexOf方法去重
+        var arr = [1,1,4,2,4,5,5,4,3,2,3,4];
+        var uniquo1 = function(arr){
+            var newArr = [];
+            for(var i = 0;i < arr.length;i++){
+                if(newArr.indexOf(arr[ i ]) < 0){
+                    newArr.push(arr[ i ]);
+                }
+            }
+            return newArr;
+        }
+        
+
+        //二维数组去重
+        var uniquo2 = function(arr){
+            var newArr = [];
+            for(var i=0;i<arr.length;i++){
+                for(var j=i+1;j<arr.length;j++){
+                    if(arr[i] === arr[j]){
+                        j = ++i;
+                    }
+                }
+                newArr.push(arr[i]);
+            }
+            return newArr;
+        }
+        
+
+        //对象创建实现
+        function uniquo3(arr){
+            var newArr = [],obj = {},i,len = arr.length;
+
+            for(i=0;i<len;i++){
+                if(!obj[arr[i]]){
+                    obj[arr[i]] = true;
+                    newArr.push(arr[i]);
+                }
+            }
+            console.log(obj);
+            return newArr;
+        }
+        
+
+        //ES5 filter过滤器实现数组去重
+        function uniquo4(arr){
+            return arr.filter(function(item,index,obj){
+                return obj.indexOf(item) === index;
+            });
+        }
+
+        console.log(uniquo1(arr));
+        console.log(uniquo2(arr));
+        console.log(uniquo3(arr));
+        console.log(uniquo4(arr));
+    </script>
+</body>
+</html>
